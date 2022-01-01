@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <!-- <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Q5qXjcapOyh5fyrFreRezjTJWrHjtkNnm4lY6PLURePyrZoO3WBDg9lA5XynMuYy95qPYzz9wOGty4Mp1ugTEWyIgUwIRWPtyCeIGRlsk9gMBU24HpXNUvkTeuzKOzQi3CVLe9u6R100_mucag4wicHWTQZ1tD9A8sXUU26rYQuioLu_RPn91nMQ7dkmVf8AKL9aeF6K7rGl1kX-x8D0-U5uv0ht472MKo4tdI1r_L-RXnKAV21BDs_qPQzbNJ4WqTOK9jrYDGLnJ3kP2SK7-S2ub5K1edNlDunabT7wc9ulsVUx75nmFPktRulQ-BkdP2-49CeqqOVUok0hvZveaWhBeXp0ytGoeb_L4ft8WjvHE2eCcbzHIxCdxXhrG6y0GMC70Ss-7zOyciDZwEnPK5Gv-Y1UcBflSvZ8WdMQfvuNDRbuxrVLaKmwqw2BSO7997Cx5Ouxo7dpOvca3pGJ_A"
+        charset="UTF-8"></script>-->
+    <script src="http://localhost:8721/Build/Cesium/Cesium.js"></script>
+    <script src="http://localhost:8721/Apps/Sandcastle/Sandcastle-header.js"></script>
+
+    <title>Cesium Viewer</title>
+</head>
+<style>
+    @import url(http://localhost:8721/Apps/Sandcastle/CesiumSandcastle.css);
+    @import url(http://localhost:8721/Apps/Sandcastle/templates/bucket.css);
+</style>
+
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="loadingOverlay">
+        <h1>Loading...</h1>
+    </div>
+    <div id="toolbar"></div>
+    <script type="text/javascript">
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZWQyZWFiYy1kZGMyLTQzMWYtOGNkNy05ODA1ZGIyYTc2MDEiLCJpZCI6NjYxNDgsImlhdCI6MTYzMDY2MTA5OH0.pubXBm3Oc94sL_b1q7k3be3NPdexNjBlpxltc4L9w3M";
+
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            Geocoder: false,
+            Animation: true,
+            CreditsDisplay: false,
+            Timeline: false,
+            FullscreenButton: false
+        });
+        viewer.scene.primitives.add(Cesium.createOsmBuildings());
+        // Add a WMS imagery layer
+        var imageryLayers = viewer.imageryLayers;
+        /*imageryLayers.addImageryProvider(
+          new Cesium.WebMapServiceImageryProvider({
+            url:"http://localhost:8082/geoserver/wms",
+            layers: "topp:states",
+            parameters: {
+              transparent: true,
+              format: "image/png",
+            },
+          })
+        );*/
+        /*  imageryLayers.addImageryProvider(
+              new Cesium.WebMapServiceImageryProvider({
+                  url: "http://localhost:8721/geoserver/wms",
+                  layers: "india:india_state",
+                  parameters: {
+                      transparent: true,
+                      format: "image/png",
+                  },
+              })
+          );*/
+
+
+
+        // Start off looking at USA.
+        viewer.camera.setView({
+            destination: Cesium.Rectangle.fromDegrees(-125.77,
+                49.83, -62.00,
+                23.00
+            ),
+        });
+
+        Sandcastle.addToolbarMenu(
+            [{
+                    text: "Select Layer",
+                    onselect: function() {
+
+                    }
+                }, {
+                    text: "USA",
+                    onselect: function() {
+
+                        /*viewer.dataSources.add(
+                            Cesium.GeoJsonDataSource.load(
+                                //  "http://localhost:8721/geoserver/topp/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=topp%3Astates&outputFormat=application%2Fjson"
+                            )
+                        );*/
+                        viewer.camera.lookAt(
+                            Cesium.Cartesian3.fromDegrees(-98.0, 40.0),
+                            new Cesium.Cartesian3(0.0, -4790000.0, 3930000.0)
+                        );
+                        console.log("Ban Da Vao Cang Cai Mep Ha");
+                        // var rectangle = Cesium.Rectangle.fromDegrees(-126.6, 21.76, -65.44, 52.64);
+
+                        /*  viewer.camera.flyTo({
+                              destination: Cesium.Cartesian3.fromDegrees(-97.98, 18.55, 4300000),
+                              orientation: {
+                                  heading: Cesium.Math.toRadians(0),
+                                  pitch: Cesium.Math.toRadians(-65.0),
+                                  roll: 0.0,
+                              },
+                          });*/
+
+                    },
+                }, {
+                    text: "Remove All",
+                    onselect: function() {
+                        viewer.dataSources.removeAll();
+                        viewer.clock.clockRange = Cesium.ClockRange.UNBOUNDED;
+                        viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+                    }
+                }
+
+
+            ],
+            // "toolbar"
+        );
+
+        Sandcastle.reset = function() {
+            viewer.dataSources.removeAll();
+            viewer.clock.clockRange = Cesium.ClockRange.UNBOUNDED;
+            viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        };
+    </script>
+</body>
+
+</html>
