@@ -61,12 +61,12 @@
 
                 }
             }, {
-                text: "CaiMepHa",
+                text: "De Phu Quoc",
                 onselect: function() {
 
                     var tileset = viewer.scene.primitives.add(
                         new Cesium.Cesium3DTileset({
-                            url: Cesium.IonResource.fromAssetId(712131),
+                            url: Cesium.IonResource.fromAssetId(753981),
                         })
                     );
 
@@ -87,7 +87,7 @@
                         .otherwise(function(error) {
                             console.log(error);
                         });
-                    viewer.camera.flyTo({
+                    /*viewer.camera.flyTo({
                         destination: Cesium.Cartesian3.fromDegrees(107.0331786404, 10.487300252, 9000),
                         orientation: {
                             heading: Cesium.Math.toRadians(0),
@@ -95,10 +95,10 @@
                             roll: 0.0,
                         },
                     });
-                    console.log("Ban Da Vao Cang Cai Mep Ha");
+                    console.log("Ban Da Vao Cang Cai Mep Ha");*/
                 },
             }, {
-                text: "CangSaiGonMoi",
+                /*text: "CangSaiGonMoi",
                 onselect: function() {
 
                     var tileset = viewer.scene.primitives.add(
@@ -137,7 +137,7 @@
                         },
                     });
                     console.log("Ban Da Vao Cang Cai Mep Ha");
-                }
+                }*/
             }], );
     </script>
 
