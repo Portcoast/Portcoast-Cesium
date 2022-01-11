@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <script src="../Apps/Sandcastle/Sandcastle-header.js"></script>
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+        @import url(../Apps/Sandcastle/CesiumSandcastle.css);
+        @import url(../Apps/Sandcastle/templates/bucket.css);
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="loadingOverlay">
+        <h1>Loading...</h1>
+    </div>
+    <div id="toolbar" style="margin-top: 20px"></div>
+    <script type="text/javascript">
+        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxZGJkMDBmNi02MThmLTRiMmEtYjEwMi02MjRjODZmNjA5NmEiLCJpZCI6NjYxNDgsImlhdCI6MTYzODc3Nzc0MH0.jhNYyW5mKTxqnd0w2E8tqxtX2UFuK5Tl2IA7lbEdXAM";
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            Geocoder: false,
+            Animation: true,
+            CreditsDisplay: false,
+            Timeline: false,
+            FullscreenButton: false
+        });
+        viewer.scene.primitives.add(Cesium.createOsmBuildings());
+
+        var imageryLayers = viewer.imageryLayers;
+
+
+        viewer.camera.setView({
+            destination: Cesium.Rectangle.fromDegrees(100,
+                50, 50.00,
+            ),
+        });
+
+        Sandcastle.addToolbarMenu(
+            [{
+                text: "Select Port",
+                onselect: function() {
+
+                }
+            }, {
+                text: "CaiMepHa",
+                onselect: function() {
+
+                    var tileset = viewer.scene.primitives.add(
+                        new Cesium.Cesium3DTileset({
+                            url: Cesium.IonResource.fromAssetId(712131),
+                        })
+                    );
+
+                    tileset.readyPromise
+                        .then(function() {
+                            viewer.zoomTo(tileset);
+
+                            // Apply the default style if it exists
+                            var extras = tileset.asset.extras;
+                            if (
+                                Cesium.defined(extras) &&
+                                Cesium.defined(extras.ion) &&
+                                Cesium.defined(extras.ion.defaultStyle)
+                            ) {
+                                tileset.style = new Cesium.Cesium3DTileStyle(extras.ion.defaultStyle);
+                            }
+                        })
+                        .otherwise(function(error) {
+                            console.log(error);
+                        });
+                    viewer.camera.flyTo({
+                        destination: Cesium.Cartesian3.fromDegrees(107.0331786404, 10.487300252, 9000),
+                        orientation: {
+                            heading: Cesium.Math.toRadians(0),
+                            pitch: Cesium.Math.toRadians(-90.0),
+                            roll: 0.0,
+                        },
+                    });
+                },
+            }, {
+                text: "CangSaiGonMoi",
+                onselect: function() {
+
+                    var tileset = viewer.scene.primitives.add(
+                        new Cesium.Cesium3DTileset({
+                            url: Cesium.IonResource.fromAssetId(699009),
+                        })
+                    );
+                    tileset.readyPromise
+                        .then(function() {
+                            viewer.zoomTo(tileset);
+
+                            // Apply the default style if it exists
+                            var extras = tileset.asset.extras;
+                            if (
+                                Cesium.defined(extras) &&
+                                Cesium.defined(extras.ion) &&
+                                Cesium.defined(extras.ion.defaultStyle)
+                            ) {
+                                tileset.style = new Cesium.Cesium3DTileStyle(extras.ion.defaultStyle);
+                            }
+                        })
+                        .otherwise(function(error) {
+                            console.log(error);
+                        });
+                    viewer.camera.flyTo({
+                        destination: Cesium.Cartesian3.fromDegrees(106.9856647817, 10.4741071048, 9000),
+                        orientation: {
+                            heading: Cesium.Math.toRadians(0),
+                            pitch: Cesium.Math.toRadians(-90.0),
+                            roll: 0.0,
+                        },
+                    });
+                }
+
+            }, {
+                text: "Vũng Án Logistics Center and Port Service",
+                onselect: function() {
+
+                    var tileset = viewer.scene.primitives.add(
+                        new Cesium.Cesium3DTileset({
+                            url: Cesium.IonResource.fromAssetId(701605),
+                        })
+                    );
+
+                    tileset.readyPromise
+                        .then(function() {
+                            viewer.zoomTo(tileset);
+
+                            // Apply the default style if it exists
+                            var extras = tileset.asset.extras;
+                            if (
+                                Cesium.defined(extras) &&
+                                Cesium.defined(extras.ion) &&
+                                Cesium.defined(extras.ion.defaultStyle)
+                            ) {
+                                tileset.style = new Cesium.Cesium3DTileStyle(extras.ion.defaultStyle);
+                            }
+                        })
+                        .otherwise(function(error) {
+                            console.log(error);
+                        });
+
+                    viewer.camera.flyTo({
+                        destination: Cesium.Cartesian3.fromDegrees(106.4080811, 18.1118779, 9000),
+                        orientation: {
+                            heading: Cesium.Math.toRadians(0),
+                            pitch: Cesium.Math.toRadians(-90.0),
+                            roll: 0.0,
+                        },
+                    });
+                },
+
+            }],
+        );
+    </script>
+
+</body>
+
+</html>
